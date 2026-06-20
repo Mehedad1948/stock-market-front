@@ -1,26 +1,254 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --brand-50: #ecfdf5;
+  --brand-100: #d1fae5;
+  --brand-200: #a7f3d0;
+  --brand-300: #6ee7b7;
+  --brand-400: #34d399;
+  --brand-500: #10a37f;
+  --brand-600: #059669;
+  --brand-700: #047857;
+  --brand-800: #065f46;
+  --brand-900: #064e3b;
+  --brand-950: #022c22;
+
+  --graphite-50: #f8fafc;
+  --graphite-100: #f1f5f9;
+  --graphite-200: #e2e8f0;
+  --graphite-300: #cbd5e1;
+  --graphite-400: #94a3b8;
+  --graphite-500: #64748b;
+  --graphite-600: #475569;
+  --graphite-700: #334155;
+  --graphite-800: #1e293b;
+  --graphite-900: #0f172a;
+  --graphite-950: #020617;
+
+  --gold-50: #fffbeb;
+  --gold-100: #fef3c7;
+  --gold-200: #fde68a;
+  --gold-300: #fcd34d;
+  --gold-400: #fbbf24;
+  --gold-500: #d6a11d;
+  --gold-600: #b7791f;
+  --gold-700: #92400e;
+  --gold-800: #78350f;
+  --gold-900: #451a03;
+
+  --success: #10a37f;
+  --success-soft: #d1fae5;
+  --warning: #f59e0b;
+  --warning-soft: #fef3c7;
+  --danger: #ef4444;
+  --danger-soft: #fee2e2;
+  --info: #3b82f6;
+  --info-soft: #dbeafe;
+
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-muted: #f1f5f9;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #10a37f;
+  --primary: #10a37f;
+  --primary-hover: #059669;
+  --primary-foreground: #ecfdf5;
+  --primary-soft: #d1fae5;
+  --accent: #34d399;
+  --accent-foreground: #064e3b;
+  --premium: #d6a11d;
+  --premium-foreground: #1c1917;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --signal-strong-buy: var(--brand-500);
+  --signal-probable-buy: var(--brand-400);
+  --signal-hold: var(--graphite-500);
+  --signal-caution: var(--warning);
+  --signal-risk-sell: #f97316;
+  --signal-confirmed-sell: var(--danger);
+  --signal-bullish: var(--brand-500);
+  --signal-bearish: var(--danger);
+  --signal-neutral: var(--graphite-400);
+
+  --signal-strongBuy: var(--signal-strong-buy);
+  --signal-probableBuy: var(--signal-probable-buy);
+  --signal-riskSell: var(--signal-risk-sell);
+  --signal-confirmedSell: var(--signal-confirmed-sell);
+
+  --shadow-card: 0 24px 48px -28px rgb(15 23 42 / 0.18);
+  --shadow-glass: 0 18px 40px -24px rgb(15 23 42 / 0.22);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: #020617;
+  --foreground: #f8fafc;
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+  --popover: #0f172a;
+  --popover-foreground: #f8fafc;
+  --surface: #0f172a;
+  --surface-muted: #1e293b;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --secondary: #1e293b;
+  --secondary-foreground: #f8fafc;
+  --border: #334155;
+  --input: #334155;
+  --ring: #34d399;
+  --primary: #10a37f;
+  --primary-hover: #34d399;
+  --primary-foreground: #022c22;
+  --primary-soft: rgb(16 163 127 / 0.14);
+  --accent: #6ee7b7;
+  --accent-foreground: #ecfdf5;
+  --premium: #fbbf24;
+  --premium-foreground: #1c1917;
+  --destructive: #f87171;
+  --destructive-foreground: #ffffff;
+  --danger: #f87171;
+  --danger-soft: rgb(248 113 113 / 0.16);
+  --warning: #fbbf24;
+  --warning-soft: rgb(251 191 36 / 0.16);
+  --info: #60a5fa;
+  --info-soft: rgb(96 165 250 / 0.16);
+
+  --signal-hold: var(--graphite-400);
+  --signal-risk-sell: #fb7185;
+  --signal-neutral: var(--graphite-400);
+
+  --shadow-card: 0 30px 60px -32px rgb(2 6 23 / 0.65);
+  --shadow-glass: 0 24px 50px -30px rgb(2 6 23 / 0.85);
 }
 
 @theme inline {
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+  --color-brand-950: var(--brand-950);
+
+  --color-graphite-50: var(--graphite-50);
+  --color-graphite-100: var(--graphite-100);
+  --color-graphite-200: var(--graphite-200);
+  --color-graphite-300: var(--graphite-300);
+  --color-graphite-400: var(--graphite-400);
+  --color-graphite-500: var(--graphite-500);
+  --color-graphite-600: var(--graphite-600);
+  --color-graphite-700: var(--graphite-700);
+  --color-graphite-800: var(--graphite-800);
+  --color-graphite-900: var(--graphite-900);
+  --color-graphite-950: var(--graphite-950);
+
+  --color-gold-50: var(--gold-50);
+  --color-gold-100: var(--gold-100);
+  --color-gold-200: var(--gold-200);
+  --color-gold-300: var(--gold-300);
+  --color-gold-400: var(--gold-400);
+  --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600);
+  --color-gold-700: var(--gold-700);
+  --color-gold-800: var(--gold-800);
+  --color-gold-900: var(--gold-900);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-premium: var(--premium);
+  --color-premium-foreground: var(--premium-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-success-soft: var(--success-soft);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger-soft: var(--danger-soft);
+  --color-info-soft: var(--info-soft);
+
+  --color-cardForeground: var(--card-foreground);
+  --color-mutedForeground: var(--muted-foreground);
+  --color-primaryForeground: var(--primary-foreground);
+  --color-primarySoft: var(--primary-soft);
+  --color-accentForeground: var(--accent-foreground);
+  --color-premiumForeground: var(--premium-foreground);
+
+  --color-signal-strong-buy: var(--signal-strong-buy);
+  --color-signal-probable-buy: var(--signal-probable-buy);
+  --color-signal-hold: var(--signal-hold);
+  --color-signal-caution: var(--signal-caution);
+  --color-signal-risk-sell: var(--signal-risk-sell);
+  --color-signal-confirmed-sell: var(--signal-confirmed-sell);
+  --color-signal-bullish: var(--signal-bullish);
+  --color-signal-bearish: var(--signal-bearish);
+  --color-signal-neutral: var(--signal-neutral);
+
+  --color-signal-strongBuy: var(--signal-strongBuy);
+  --color-signal-probableBuy: var(--signal-probableBuy);
+  --color-signal-riskSell: var(--signal-riskSell);
+  --color-signal-confirmedSell: var(--signal-confirmedSell);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-glass: var(--shadow-glass);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
+}
+
+html {
+  background-color: var(--background);
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgb(16 163 127 / 0.08), transparent 28%),
+    linear-gradient(180deg, var(--background) 0%, var(--background) 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: rgb(16 163 127 / 0.22);
+  color: var(--foreground);
 }
