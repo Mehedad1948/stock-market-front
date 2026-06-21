@@ -2,6 +2,7 @@ import { ArrowUpLeft } from "lucide-react";
 
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const stockCards = [
   "فولاد",
@@ -20,6 +21,13 @@ export default function Page() {
       dir="rtl"
       className="relative min-h-screen overflow-hidden bg-white text-black"
     >
+      <Image
+      className="fixed w-28 bottom-0 left-10 opacity-50 sepia hover:opacity-100 hover:sepia-0 transition-all duration-500"
+        src={'/images/colorful.png'}
+        width={400}
+        height={300}
+        alt=""
+      />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-x-[-6%] top-[-12%] h-[24rem] bg-[linear-gradient(90deg,rgba(186,170,255,0.78)_0%,rgba(181,217,255,0.72)_28%,rgba(255,231,120,0.78)_54%,rgba(244,171,197,0.68)_78%,rgba(229,177,214,0.64)_100%)] blur-[105px]" />
         <div className="absolute left-1/2 top-[5.5rem] h-[14rem] w-[44rem] -translate-x-1/2 rounded-full bg-white/84 blur-[90px]" />
@@ -73,7 +81,7 @@ export default function Page() {
             <br />
             <span>تحلیل گر</span>
             <span className="bg-[linear-gradient(90deg,#8b5cf6_0%,#ec4899_30%,#f97316_58%,#eab308_82%,#3b82f6_100%)] bg-clip-text text-transparent mx-4">
-               خردمند 
+              خردمند
             </span>
             <span>بازارهای مالی</span>
           </h1>
