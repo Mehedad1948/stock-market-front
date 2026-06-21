@@ -1,164 +1,130 @@
-import { ArrowUpRight, Crown, ShieldCheck, TrendingDown, TrendingUp } from "lucide-react";
+import { ArrowUpLeft } from "lucide-react";
 
-import { badgeToneClassMap } from "@/lib/theme/signal-tone";
+import { Container } from "@/components/layout/container";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
-const signals = [
-  {
-    label: "Strong Buy",
-    utilityClass: "bg-signal-strong-buy",
-    toneClass: badgeToneClassMap.success,
-    icon: TrendingUp,
-  },
-  {
-    label: "Hold",
-    utilityClass: "bg-signal-hold",
-    toneClass: badgeToneClassMap.neutral,
-    icon: ShieldCheck,
-  },
-  {
-    label: "Confirmed Sell",
-    utilityClass: "bg-signal-confirmed-sell",
-    toneClass: badgeToneClassMap.danger,
-    icon: TrendingDown,
-  },
-] as const;
+const stockCards = [
+  "Foolad",
+  "Fars",
+  "Shasta",
+  "Khodro",
+  "Fameli",
+  "Shepna",
+  "Tamin",
+  "Nouri",
+];
 
-const analysisCards = [
-  {
-    title: "Smart Liquidity Scan",
-    value: "+12.4%",
-    description: "AI-weighted signal confidence across high-volume Tehran exchange symbols.",
-    toneClass: badgeToneClassMap.success,
-  },
-  {
-    title: "Premium Insight",
-    value: "Tier A",
-    description: "Reserved for high-conviction setups and institution-style momentum alignment.",
-    toneClass: badgeToneClassMap.premium,
-  },
-  {
-    title: "Risk Window",
-    value: "Elevated",
-    description: "Distribution pressure detected in short-term breadth and market internals.",
-    toneClass: badgeToneClassMap.warning,
-  },
-] as const;
-
-export default function Home() {
+export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col bg-background text-foreground">
-      <section className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-10 px-6 py-10 lg:px-10">
-        <div className="rounded-[28px] border border-border/80 bg-card/88 p-8 shadow-card backdrop-blur xl:p-10">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl space-y-5">
-              <div className="inline-flex items-center gap-2 rounded-full border border-brand-500/20 bg-primary-soft px-4 py-2 text-sm font-medium text-success">
-                <span className="h-2 w-2 rounded-full bg-brand-500" />
-                Premium market intelligence for Iran equities
-              </div>
-              <div className="space-y-4">
-                <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                  Dark, credible signal interfaces built for analytical confidence.
-                </h1>
-                <p className="max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-                  The theme is centered on graphite surfaces, emerald action states, restrained
-                  premium gold, and semantic market tones that stay compatible with Tailwind v4
-                  and shadcn-style components.
-                </p>
-              </div>
+    <main
+      dir="ltr"
+      className="relative min-h-screen overflow-hidden bg-[#f6f3ee] text-black"
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-x-0 top-0 h-[38vh] bg-[linear-gradient(90deg,rgba(186,170,255,0.85)_0%,rgba(181,217,255,0.82)_34%,rgba(255,231,120,0.9)_58%,rgba(244,171,197,0.78)_82%,rgba(229,177,214,0.75)_100%)] blur-3xl" />
+        <div className="absolute left-1/2 top-[18%] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-white/70 blur-3xl" />
+        <div className="absolute inset-x-0 bottom-0 h-[48vh] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.88),rgba(246,243,238,0.7)_44%,rgba(246,243,238,0.96)_100%)]" />
+        <div className="absolute left-[-8%] top-[32%] h-64 w-64 rounded-full bg-[#c2d9ff]/35 blur-3xl" />
+        <div className="absolute right-[-6%] top-[20%] h-72 w-72 rounded-full bg-[#ffd7c1]/35 blur-3xl" />
+      </div>
+
+      <Container className="relative z-10 flex min-h-screen flex-col pt-6 pb-10 sm:pt-8">
+        <header className="mx-auto w-full max-w-3xl rounded-full border border-black/15 bg-[#2d2b37]/92 p-2 text-white shadow-[0_18px_45px_-26px_rgba(0,0,0,0.65)] backdrop-blur">
+          <div className="flex items-center justify-between gap-3 rounded-full">
+            <div className="px-4 text-[2rem] leading-none tracking-[-0.04em] text-white sm:px-5">
+              boursekala
             </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {signals.map(({ label, utilityClass, toneClass, icon: Icon }) => (
-                <div
-                  key={label}
-                  className="rounded-2xl border border-border/70 bg-muted/55 p-4 shadow-glass"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className={`rounded-full px-3 py-1 text-xs font-semibold ${toneClass}`}>
-                      {label}
-                    </span>
-                    <Icon className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                  <div className="mt-4 flex items-center gap-3">
-                    <span className={`h-3 w-3 rounded-full ${utilityClass}`} />
-                    <span className="text-sm text-muted-foreground">{utilityClass}</span>
+            <nav className="hidden items-center gap-7 text-sm text-white/90 md:flex">
+              <a href="#features" className="transition hover:text-white">
+                Market
+              </a>
+              <a href="#cards" className="transition hover:text-white">
+                Stocks
+              </a>
+              <a href="#cards" className="transition hover:text-white">
+                Signals
+              </a>
+              <a href="#cards" className="transition hover:text-white">
+                Pricing
+              </a>
+            </nav>
+            <div className="flex items-center gap-2">
+              <a
+                href="#cards"
+                className="hidden px-4 text-sm text-white/90 transition hover:text-white sm:inline-flex"
+              >
+                Log In
+              </a>
+              <Button
+                href="#cards"
+                variant="secondary"
+                size="md"
+                className="h-11 border border-white/20 bg-white text-black shadow-none hover:bg-white/90"
+              >
+                Sign Up
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        <section className="flex flex-1 flex-col items-center justify-center px-4 pt-16 text-center sm:pt-20 lg:pt-24">
+          <Badge
+            variant="secondary"
+            className="rounded-full border border-black/8 bg-white/55 px-4 py-2 text-sm font-medium tracking-normal text-black/85 shadow-[0_12px_35px_-28px_rgba(0,0,0,0.45)] backdrop-blur"
+          >
+            IRAN STOCK MARKET
+          </Badge>
+
+          <h1 className="mt-5 max-w-5xl text-6xl leading-[0.95] font-light tracking-[-0.07em] text-black sm:text-7xl lg:text-[7.5rem]">
+            Trading tools
+            <br />
+            worthy of{" "}
+            <span className="bg-[linear-gradient(90deg,#9b5de5_0%,#f15bb5_28%,#fb5607_52%,#ffbe0b_76%,#3a86ff_100%)] bg-clip-text text-transparent">
+              your edge
+            </span>
+          </h1>
+
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-black/62 sm:text-[1.35rem]">
+            A clean market landing page for Iranian equities, rebuilt from the
+            provided layout with stock-focused cards and blank media slots.
+          </p>
+
+          <div className="mt-9">
+            <Button
+              href="#cards"
+              variant="dark"
+              size="lg"
+              className="h-14 gap-4 border border-white/35 bg-[#2b2b2f] px-7 text-base font-medium text-white shadow-[0_20px_35px_-18px_rgba(0,0,0,0.75),0_8px_0_rgba(0,0,0,0.2)] hover:bg-[#232329]"
+            >
+              Get Started
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white">
+                <ArrowUpLeft className="h-4 w-4 rotate-45" />
+              </span>
+            </Button>
+          </div>
+        </section>
+
+        <section id="cards" className="mt-auto pt-10 sm:pt-14">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 xl:grid-cols-8">
+            {stockCards.map((stock) => (
+              <article key={stock} className="flex flex-col gap-3">
+                <div className="rounded-full border border-white/80 bg-white/55 px-4 py-3 text-center text-sm font-medium uppercase tracking-[-0.02em] text-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45)] backdrop-blur">
+                  {stock}
+                </div>
+
+                <div className="rounded-[1.4rem] border border-white/80 bg-white/60 p-2 shadow-[0_24px_40px_-32px_rgba(0,0,0,0.45)] backdrop-blur">
+                  <div className="flex aspect-[4/5] items-center justify-center rounded-[1.1rem] border border-dashed border-black/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(231,233,237,0.78))] text-center text-sm font-medium text-black/28">
+                    Empty
+                    <br />
+                    Placeholder
                   </div>
                 </div>
-              ))}
-            </div>
+              </article>
+            ))}
           </div>
-        </div>
-
-        <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-          <div className="rounded-[28px] border border-border/80 bg-card/88 p-7 shadow-card backdrop-blur">
-            <div className="flex items-center justify-between gap-4 border-b border-border/80 pb-5">
-              <div>
-                <p className="text-sm font-medium uppercase tracking-[0.24em] text-muted-foreground">
-                  Analysis card examples
-                </p>
-                <h2 className="mt-2 text-2xl font-semibold text-card-foreground">
-                  Semantic usage samples
-                </h2>
-              </div>
-              <span className={badgeToneClassMap.info + " rounded-full px-3 py-1 text-xs font-semibold"}>
-                bg-card text-muted-foreground border-border
-              </span>
-            </div>
-
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {analysisCards.map((card) => (
-                <article
-                  key={card.title}
-                  className="rounded-3xl border border-border/70 bg-background/70 p-5 shadow-glass"
-                >
-                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${card.toneClass}`}>
-                    {card.title}
-                  </span>
-                  <div className="mt-5 flex items-end justify-between gap-4">
-                    <div>
-                      <p className="text-3xl font-semibold text-card-foreground">{card.value}</p>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        {card.description}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="h-5 w-5 text-primary" />
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <aside className="rounded-[28px] border border-border/80 bg-card/88 p-7 shadow-card backdrop-blur">
-            <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-gold-100 p-3 text-premium dark:bg-gold-400/12 dark:text-gold-300">
-                <Crown className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Token reference</p>
-                <h2 className="text-2xl font-semibold text-card-foreground">
-                  Tailwind utility examples
-                </h2>
-              </div>
-            </div>
-
-            <div className="mt-6 space-y-3 rounded-3xl border border-border/70 bg-background/70 p-5 font-mono text-sm text-muted-foreground">
-              <p>`bg-background text-foreground`</p>
-              <p>`bg-card text-card-foreground border-border`</p>
-              <p>`bg-primary text-primary-foreground hover:bg-brand-600`</p>
-              <p>`bg-primary-soft text-success`</p>
-              <p>`bg-signal-strong-buy` and `bg-signal-confirmed-sell`</p>
-            </div>
-
-            <div className="mt-6 rounded-3xl border border-brand-500/20 bg-primary-soft p-5">
-              <p className="text-sm font-medium text-success">Implementation note</p>
-              <p className="mt-2 text-sm leading-7 text-card-foreground">
-                The theme uses CSS variables in <code>globals.css</code> and exposes them through
-                Tailwind v4 <code>@theme inline</code>, which is the correct direction for this
-                project instead of reintroducing a legacy Tailwind config file.
-              </p>
-            </div>
-          </aside>
         </section>
-      </section>
+      </Container>
     </main>
   );
 }

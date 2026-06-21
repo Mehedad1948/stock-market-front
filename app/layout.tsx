@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Vazirmatn } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
+const vazirmatn = Vazirmatn({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  subsets: ["arabic", "latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Stock Market Signal",
-  description: "Premium stock market analysis and signal platform for the Iran market.",
+  title: "استاک سیگنال | پلتفرم تحلیل و سیگنال بازار سرمایه",
+  description: "پلتفرم حرفه‌ای تحلیل و سیگنال برای بازار سرمایه ایران با هویت بصری پریمیوم و مدرن.",
 };
 
 export default function RootLayout({
@@ -24,8 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
+      lang="fa"
+      dir="rtl"
+      className={`${vazirmatn.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-background text-foreground flex flex-col">
         {children}
