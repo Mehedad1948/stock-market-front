@@ -64,7 +64,11 @@ async function getCachedStockAnalysis(
   cacheTag(CacheKeys.stockAnalysisByQuery(symbol, queryString));
 
   return stocksWebService.get<StockAnalysisResult>(
-    buildEncodedSymbolPath(symbol, `/analysis${queryString}`)
+    buildEncodedSymbolPath(symbol, `/analysis${queryString}`),
+    {
+      rawResponse: true,
+      withAuth: false,
+    }
   );
 }
 
@@ -73,7 +77,11 @@ export const signalesService = {
     if (options.requestId) {
       return stocksWebService.get<StockAnalysisResult>(
         buildEncodedSymbolPath(symbol, `/analysis${buildSearchParams(query)}`),
-        { requestId: options.requestId }
+        {
+          rawResponse: true,
+          requestId: options.requestId,
+          withAuth: false,
+        }
       );
     }
 
@@ -89,7 +97,9 @@ export const signalesService = {
       buildEncodedSymbolPath(symbol, "/refresh"),
       {
         body: body ?? {},
-        requestId: options.requestId
+        rawResponse: true,
+        requestId: options.requestId,
+        withAuth: false,
       }
     );
   },
@@ -97,21 +107,31 @@ export const signalesService = {
   getHistory(symbol: string, query?: StockHistoryQuery, options: ServiceOptions = {}) {
     return stocksWebService.get<StockHistoryResponse>(
       buildEncodedSymbolPath(symbol, `/history${buildSearchParams(query)}`),
-      { requestId: options.requestId }
+      {
+        rawResponse: true,
+        requestId: options.requestId,
+        withAuth: false,
+      }
     );
   },
 
   getLatestMetric(symbol: string, options: ServiceOptions = {}) {
     return stocksWebService.get<LatestStockMetricResponse>(
       buildEncodedSymbolPath(symbol, "/latest"),
-      { requestId: options.requestId }
+      {
+        rawResponse: true,
+        requestId: options.requestId,
+        withAuth: false,
+      }
     );
   },
 
   scanSignals(body?: ManualSignalScanBody, options: ServiceOptions = {}) {
     return stocksWebService.post<ManualSignalScanResponse>("/signals/scan", {
       body: body ?? {},
-      requestId: options.requestId
+      rawResponse: true,
+      requestId: options.requestId,
+      withAuth: false,
     });
   }
 };

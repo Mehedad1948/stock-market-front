@@ -56,7 +56,7 @@ type LoginPanelProps = {
   telegramBotUsername: string | null;
 };
 
-const DASHBOARD_PATH = "/";
+const DASHBOARD_PATH = "/dashboard";
 
 function providerErrorMessage(error: unknown) {
   if (error instanceof Error) {
