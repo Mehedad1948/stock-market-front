@@ -254,3 +254,40 @@ body {
   background: rgb(16 163 127 / 0.22);
   color: var(--foreground);
 }
+
+.stock-wave-grid {
+  isolation: isolate;
+}
+
+/* .stock-wave-card__panel {
+  transform-origin: center center;
+  animation: stock-card-wave 5.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation-delay: var(--wave-delay, 0ms);
+  will-change: transform;
+} */
+
+@keyframes stock-card-wave {
+  0%,
+  18%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  26% {
+    transform: translate3d(0, -10px, 0) scale(1.035);
+  }
+
+  34% {
+    transform: translate3d(0, -3px, 0) scale(1.01);
+  }
+
+  42% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stock-wave-card__panel {
+    animation: none;
+  }
+}

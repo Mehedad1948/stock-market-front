@@ -9,7 +9,7 @@ const pendingAuthSchema = z.object({
 const sessionCookieSchema = z.object({
   accessToken: z.string(),
   authenticatedAt: z.string(),
-  expiresAt: z.string(),
+  expiresAt: z.string().nullable(),
   identifier: z.string()
 });
 

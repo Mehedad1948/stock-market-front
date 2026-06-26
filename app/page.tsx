@@ -1,19 +1,17 @@
-import { ArrowUpLeft } from "lucide-react";
+import { Suspense } from "react";
 
-import { Container } from "@/components/layout/container";
-import { Button } from "@/components/ui/button";
+import { ArrowUpLeft } from "lucide-react";
 import Image from "next/image";
 
-const stockCards = [
-  "فولاد",
-  "فارس",
-  "شستا",
-  "خودرو",
-  "فملی",
-  "شپنا",
-  "نوری",
-  "وبملت",
-];
+import { Container } from "@/components/layout/container";
+import BacktestReportSection, {
+  BacktestReportSkeleton,
+} from "@/components/landing/BacktestReportSection";
+import CardSignals, {
+  CardSignalsSkeleton,
+} from "@/components/landing/CardSignals";
+import { Button } from "@/components/ui/button";
+
 
 export default function Page() {
   return (
@@ -22,8 +20,8 @@ export default function Page() {
       className="relative min-h-screen overflow-hidden bg-white text-black"
     >
       <Image
-      className="fixed w-28 bottom-0 left-10 opacity-50 sepia hover:opacity-100 hover:sepia-0 transition-all duration-500"
-        src={'/images/colorful.png'}
+        className="fixed bottom-0 left-10 w-28 opacity-50 sepia transition-all duration-500 hover:opacity-100 hover:sepia-0"
+        src={"/images/colorful.png"}
         width={400}
         height={300}
         alt=""
@@ -57,7 +55,7 @@ export default function Page() {
             </nav>
             <div className="flex items-center gap-2">
               <a
-                href="#cards"
+                href="/login"
                 className="hidden px-4 text-[13px] text-white/90 transition hover:text-white sm:inline-flex"
               >
                 ورود
@@ -75,12 +73,14 @@ export default function Page() {
         </header>
 
         <section className="flex flex-1 flex-col items-center justify-center px-4 pt-12 text-center sm:pt-14 lg:pt-16">
+          <h1 className="mt-4 max-w-5xl text-4xl leading-[1.08] font-medium tracking-[-0.05em] text-black sm:text-5xl lg:text-[5rem] relative">
+            <span className="relative">
 
-          <h1 className="mt-4 max-w-5xl text-4xl leading-[1.08] font-medium tracking-[-0.05em] text-black sm:text-5xl lg:text-[5rem]">
-            خیام پالس
+              خیام پالس
+            </span>
             <br />
             <span>تحلیل گر</span>
-            <span className="bg-[linear-gradient(90deg,#8b5cf6_0%,#ec4899_30%,#f97316_58%,#eab308_82%,#3b82f6_100%)] bg-clip-text text-transparent mx-4">
+            <span className="mx-4 bg-[linear-gradient(90deg,#8b5cf6_0%,#ec4899_30%,#f97316_58%,#eab308_82%,#3b82f6_100%)] bg-clip-text text-transparent">
               خردمند
             </span>
             <span>بازارهای مالی</span>
@@ -108,23 +108,9 @@ export default function Page() {
         </section>
 
         <section id="cards" className="mt-auto pt-6 sm:pt-8">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 xl:grid-cols-8">
-            {stockCards.map((stock) => (
-              <article key={stock} className="flex flex-col gap-3">
-                <div className="rounded-full border border-white/80 bg-white/55 px-4 py-2.5 text-center text-sm font-medium tracking-[-0.02em] text-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45)] backdrop-blur">
-                  {stock}
-                </div>
-
-                <div className="rounded-[1.4rem] border border-white/80 bg-white/60 p-2 shadow-[0_24px_40px_-32px_rgba(0,0,0,0.45)] backdrop-blur">
-                  <div className="flex aspect-[4/5] items-center justify-center rounded-[1.1rem] border border-dashed border-black/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(231,233,237,0.78))] text-center text-xs font-medium text-black/28">
-                    جای تصویر
-                    <br />
-                    نمونه
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <Suspense fallback={<CardSignalsSkeleton />}>
+            <CardSignals />
+          </Suspense>
         </section>
       </Container>
     </main>

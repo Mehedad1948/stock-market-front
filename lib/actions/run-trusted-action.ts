@@ -26,9 +26,11 @@ export async function runTrustedAction<TData>(
 
   try {
     const data = await handler();
+console.log('✅✅✅ ACTION DATA', data);
 
     return actionSuccess(data);
   } catch (error) {
+console.log('Action Error ❌', error);
 
     return actionFailure(
       normalizeApiError(

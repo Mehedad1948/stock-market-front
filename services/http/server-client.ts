@@ -1,17 +1,18 @@
 import "server-only";
 
-import { getBackendAccessToken } from "@/lib/auth/session";
 import { env } from "@/env";
+import { getBackendAccessToken } from "@/lib/auth/session";
 import {
   backendEnvelopeToApiError,
   createApiError,
   isBackendApiErrorEnvelope,
-  isBackendApiSuccessEnvelope
+  isBackendApiSuccessEnvelope,
 } from "@/lib/api/api-errors";
 
 interface ServerRequestOptions extends Omit<RequestInit, "body"> {
   accessToken?: string;
   body?: unknown;
+  rawResponse?: boolean;
   requestId?: string;
   timeoutMs?: number;
   withAuth?: boolean;
@@ -47,7 +48,7 @@ async function resolveAccessToken(options: {
       code: "AUTH_REQUIRED",
       message: "Authentication is required.",
       requestId: options.requestId,
-      status: 401
+      status: 401,
     });
   }
 
@@ -56,11 +57,12 @@ async function resolveAccessToken(options: {
 
 export async function serverRequest<TData>(
   path: `/${string}`,
-  options: ServerRequestOptions = {}
+  options: ServerRequestOptions = {},
 ): Promise<TData> {
   const {
     accessToken: providedAccessToken,
     body,
+    rawResponse = false,
     requestId: providedRequestId,
     timeoutMs: providedTimeoutMs,
     withAuth = true,
@@ -70,9 +72,9 @@ export async function serverRequest<TData>(
   const requestId = providedRequestId ?? crypto.randomUUID();
   const timeoutMs = providedTimeoutMs ?? 8_000;
   const accessToken = await resolveAccessToken({
-    accessToken: providedAccessToken ,
-    requestId ,
-    withAuth
+    accessToken: providedAccessToken,
+    requestId,
+    withAuth,
   });
 
   const headers = new Headers(options.headers);
@@ -87,7 +89,7 @@ export async function serverRequest<TData>(
     ...fetchOptions,
     cache: "no-store",
     headers,
-    signal: AbortSignal.timeout(timeoutMs)
+    signal: AbortSignal.timeout(timeoutMs),
   };
 
   if (body !== undefined) {
@@ -107,8 +109,12 @@ export async function serverRequest<TData>(
       code: "BACKEND_REQUEST_FAILED",
       message: "Backend request failed.",
       requestId,
-      status: response.status
+      status: response.status,
     });
+  }
+
+  if (rawResponse) {
+    return payload as TData;
   }
 
   if (!isBackendApiSuccessEnvelope<TData>(payload)) {
@@ -116,7 +122,7 @@ export async function serverRequest<TData>(
       code: "BACKEND_RESPONSE_INVALID",
       message: "Backend response was invalid.",
       requestId,
-      status: 502
+      status: 502,
     });
   }
 
@@ -126,37 +132,49 @@ export async function serverRequest<TData>(
 export class WebService {
   constructor(private readonly basePath: `/${string}`) {}
 
-  delete<TData>(path: `/${string}`, options?: ServiceRequestOptions): Promise<TData> {
+  delete<TData>(
+    path: `/${string}`,
+    options?: ServiceRequestOptions,
+  ): Promise<TData> {
     return this.request<TData>(path, {
       ...options,
-      method: "DELETE"
+      method: "DELETE",
     });
   }
 
-  get<TData>(path: `/${string}`, options?: ServiceRequestOptions): Promise<TData> {
+  get<TData>(
+    path: `/${string}`,
+    options?: ServiceRequestOptions,
+  ): Promise<TData> {
     return this.request<TData>(path, {
       ...options,
-      method: "GET"
+      method: "GET",
     });
   }
 
-  post<TData>(path: `/${string}`, options?: ServiceRequestOptions): Promise<TData> {
+  post<TData>(
+    path: `/${string}`,
+    options?: ServiceRequestOptions,
+  ): Promise<TData> {
     return this.request<TData>(path, {
       ...options,
-      method: "POST"
+      method: "POST",
     });
   }
 
-  put<TData>(path: `/${string}`, options?: ServiceRequestOptions): Promise<TData> {
+  put<TData>(
+    path: `/${string}`,
+    options?: ServiceRequestOptions,
+  ): Promise<TData> {
     return this.request<TData>(path, {
       ...options,
-      method: "PUT"
+      method: "PUT",
     });
   }
 
   private request<TData>(
     path: `/${string}`,
-    options: ServerRequestOptions
+    options: ServerRequestOptions,
   ): Promise<TData> {
     return serverRequest<TData>(this.buildPath(path), options);
   }
@@ -165,4 +183,3 @@ export class WebService {
     return `${this.basePath}${path}` as `/${string}`;
   }
 }
-
