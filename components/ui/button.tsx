@@ -41,6 +41,14 @@ const buttonVariants = {
     // Muted - Subtle
     muted:
       "bg-muted text-muted-foreground hover:bg-muted/80",
+
+    // Dashboard - minimal rounded pill, no shadow
+    dashboard:
+      "rounded-full bg-[#17181c] text-white hover:bg-[#23242a]",
+    "dashboard-secondary":
+      "rounded-full border border-black/6 bg-[#fbfbf8] text-[#17181c] hover:bg-[#f1f1eb]",
+    "dashboard-ghost":
+      "rounded-full bg-transparent text-[#17181c] hover:bg-black/4",
   },
   size: {
     xs: "h-8 px-3 text-xs",

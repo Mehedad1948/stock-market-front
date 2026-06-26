@@ -27,14 +27,16 @@ export default async function DashboardLayout({
   const symbol = safeDecodeSymbol(resolvedParams?.symbol);
 
   return (
-    <div className="grid min-h-screen gap-6 lg:grid-cols-[320px_minmax(0,1fr)] bg-gradient-to-br from-graphite-50 to-graphite-100 dark:from-graphite-950 dark:to-graphite-900">
-      <DashboardSidebar
-        activePath={symbol ? "analysis" : "dashboard"}
-        symbol={symbol}
-      />
-      <div className="min-w-0">
-        <div className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
-          {children}
+    <div className="px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
+      <div className="dashboard-app-frame mx-auto min-h-[calc(100vh-1.5rem)] max-w-[1880px] p-3 sm:p-4">
+        <div className="min-h-[calc(100vh-3rem)]">
+          <DashboardSidebar
+            activePath={symbol ? "analysis" : "dashboard"}
+            symbol={symbol}
+          />
+          <div className="min-w-0 rounded-[2rem] bg-transparent p-2 sm:p-3 lg:pr-[132px] lg:pl-4 lg:py-4">
+            {children}
+          </div>
         </div>
       </div>
     </div>

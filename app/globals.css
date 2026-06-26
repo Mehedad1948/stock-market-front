@@ -135,6 +135,12 @@
 
   --shadow-card: 0 24px 48px -28px rgb(15 23 42 / 0.18);
   --shadow-glass: 0 18px 40px -24px rgb(15 23 42 / 0.22);
+  --dashboard-bg: #e8eee5;
+  --dashboard-frame: #f5f5f1;
+  --dashboard-surface: #fbfbf8;
+  --dashboard-muted: #eef2ea;
+  --dashboard-accent: #efff78;
+  --dashboard-ink: #17181c;
 }
 
 .dark {
@@ -328,8 +334,8 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, rgb(16 163 127 / 0.08), transparent 28%),
-    linear-gradient(180deg, var(--background) 0%, var(--background) 100%);
+    radial-gradient(circle at top, rgb(239 255 120 / 0.18), transparent 18%),
+    linear-gradient(180deg, var(--dashboard-bg) 0%, #edf1e7 100%);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
@@ -341,6 +347,43 @@ body {
 
 .stock-wave-grid {
   isolation: isolate;
+}
+
+.dashboard-app-frame {
+  border: 1px solid rgb(23 24 28 / 0.08);
+  border-radius: 2rem;
+  background: var(--dashboard-frame);
+}
+
+.dashboard-surface {
+  border: 1px solid rgb(23 24 28 / 0.06);
+  border-radius: 2rem;
+  background: var(--dashboard-surface);
+}
+
+.dashboard-surface-muted {
+  border: 1px solid rgb(229 234 223 / 1);
+  border-radius: 2rem;
+  background: var(--dashboard-muted);
+}
+
+.dashboard-surface-accent {
+  border: 1px solid rgb(219 233 109 / 1);
+  border-radius: 2rem;
+  background: var(--dashboard-accent);
+}
+
+.dashboard-surface-dark {
+  border: 1px solid rgb(23 24 28 / 0.08);
+  border-radius: 2rem;
+  background: #1a1b20;
+  color: white;
+}
+
+.dashboard-pill {
+  border: 1px solid rgb(23 24 28 / 0.06);
+  border-radius: 999px;
+  background: var(--dashboard-surface);
 }
 
 /* .stock-wave-card__panel {
