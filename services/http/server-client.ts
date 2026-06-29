@@ -99,6 +99,7 @@ export async function serverRequest<TData>(
 
   const response = await fetch(joinBackendUrl(path), requestOptions);
   const payload = await readJson(response);
+console.log('🐞🐞 response', response);
 
   if (!response.ok) {
     if (isBackendApiErrorEnvelope(payload)) {
