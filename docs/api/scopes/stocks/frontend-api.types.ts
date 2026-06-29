@@ -2,6 +2,14 @@
    This file is intentionally standalone so you can copy it into another project.
    Dates are ISO strings in the frontend contract, even when the backend uses Date objects internally. */
 
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: JsonValue }
+  | JsonValue[];
+
 export type ErrorResponse = {
   status: 'ERROR';
   message: string;
@@ -12,6 +20,26 @@ export type ErrorResponse = {
   accessLevel?: string;
   [key: string]: unknown;
 };
+
+export type AnalysisIndicatorComponent =
+  | 'liquidity'
+  | 'stochRsi'
+  | 'priceTrend'
+  | 'mfi'
+  | 'adx'
+  | 'atr';
+
+export type BacktestComparisonVariant =
+  | 'full_composite'
+  | 'stochRsi_only'
+  | 'priceTrend_only'
+  | 'mfi_only'
+  | 'liquidity_only'
+  | 'composite_without_atr'
+  | 'composite_without_adx'
+  | 'composite_without_stochRsi'
+  | 'composite_without_priceTrend'
+  | 'composite_without_mfi';
 
 export type DiscountPreview = {
   valid: boolean;

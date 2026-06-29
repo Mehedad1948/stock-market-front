@@ -4,9 +4,6 @@ import { ArrowUpLeft } from "lucide-react";
 import Image from "next/image";
 
 import { Container } from "@/components/layout/container";
-import BacktestReportSection, {
-  BacktestReportSkeleton,
-} from "@/components/landing/BacktestReportSection";
 import CardSignals, {
   CardSignalsSkeleton,
 } from "@/components/landing/CardSignals";

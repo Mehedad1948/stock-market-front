@@ -4,7 +4,6 @@ import { ArrowRight, Search } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 
 import { AnalysisView } from "@/components/dashboard/analysis-view";
-import { DashboardPanel } from "@/components/dashboard/dashboard-primitives";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -78,43 +77,39 @@ export default async function SymbolAnalysisPage(props: SymbolPageProps) {
 
   return (
     <main dir="rtl" className="space-y-4 text-[#17181c]">
-      <section className="dashboard-surface px-5 py-5 sm:px-7 sm:py-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-3">
-              <Badge variant="dashboard" className="h-12 px-4 text-sm font-medium">
-                <Search className="h-4 w-4" />
-                تحلیل نماد
-              </Badge>
-              <Badge
-                variant="dashboard-highlight"
-                className="h-12 px-4 text-sm font-medium"
-              >
-                {symbol}
-              </Badge>
-            </div>
-            <h1 className="text-3xl font-medium tracking-[-0.06em] sm:text-5xl">
-              تحلیل {symbol}
-            </h1>
+      <section className="flex flex-wrap items-center justify-between gap-4">
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <Badge variant="dashboard" className="h-12 px-4 text-sm font-medium">
+              <Search className="h-4 w-4" />
+              تحلیل نماد
+            </Badge>
+            <Badge
+              variant="dashboard-highlight"
+              className="h-12 px-4 text-sm font-medium"
+            >
+              {symbol}
+            </Badge>
           </div>
-
-          <Button
-            href="/dashboard"
-            variant="dashboard-secondary"
-            size="lg"
-            className="h-14 px-6 text-base"
-          >
-            <ArrowRight className="h-5 w-5" />
-            بازگشت به گروه‌ها
-          </Button>
+          <h1 className="text-3xl font-medium tracking-[-0.06em] sm:text-5xl">
+            تحلیل {symbol}
+          </h1>
         </div>
+
+        <Button
+          href="/dashboard"
+          variant="dashboard-secondary"
+          size="lg"
+          className="h-14 px-6 text-base"
+        >
+          <ArrowRight className="h-5 w-5" />
+          بازگشت به گروه‌ها
+        </Button>
       </section>
 
-      <DashboardPanel tone="muted" className="p-4 sm:p-5">
         <Suspense fallback={<AnalysisSkeleton />}>
           <SymbolAnalysisContent symbol={symbol} />
         </Suspense>
-      </DashboardPanel>
     </main>
   );
 }

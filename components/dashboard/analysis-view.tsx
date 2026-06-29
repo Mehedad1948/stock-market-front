@@ -1,89 +1,164 @@
-import {
-  BadgeCheck,
-  BarChart3,
-  BrainCircuit,
-  RefreshCcw,
-  TrendingUp,
-} from "lucide-react";
+import { BarChart3, TrendingUp } from "lucide-react";
 
 import {
-  DashboardDotMeter,
   DashboardIconFrame,
   DashboardPanel,
   DashboardSectionLabel,
 } from "@/components/dashboard/dashboard-primitives";
-import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import type { StockAnalysisResult } from "@/types/stock-analysis-api";
+import { cn } from "@/lib/utils";
+import type {
+  PresentedTimeframeComposite,
+  StockAnalysisResult,
+  TimeframeAction,
+} from "@/types/stock-analysis-api";
 
 type AnalysisViewProps = {
   analysis: StockAnalysisResult;
   symbol: string;
 };
 
-function formatPercent(value: number | null | undefined) {
-  if (value === null || value === undefined || Number.isNaN(value)) {
-    return "-";
-  }
+type TimeframeEntry = {
+  label: string;
+  timeframe: PresentedTimeframeComposite;
+};
 
-  const sign = value > 0 ? "+" : "";
-  return `${sign}${value.toFixed(2)}%`;
+function getSignalProgress(score: number) {
+  return Math.min(100, Math.max(0, (score + 100) / 2));
+}
+
+function getTimeframeSignalTheme(action: TimeframeAction) {
+  switch (action) {
+    case "BUY":
+      return {
+        badgeClassName:
+          "border border-emerald-400/50 bg-emerald-100 text-emerald-800",
+      };
+    case "PROBABLE_BUY":
+      return {
+        badgeClassName:
+          "border border-[#dbe96d] bg-[#efff78] text-[#17181c]",
+      };
+    case "HOLD":
+      return {
+        badgeClassName:
+          "border border-black/8 bg-[#f1f1eb] text-[#17181c]",
+      };
+    case "WAIT":
+      return {
+        badgeClassName:
+          "border border-[#efd3a2] bg-[#f7e6c5] text-[#17181c]",
+      };
+    case "CAUTION":
+      return {
+        badgeClassName:
+          "border border-[#f4c88a] bg-[#fde7bf] text-[#17181c]",
+      };
+    case "REDUCE":
+      return {
+        badgeClassName:
+          "border border-rose-200 bg-rose-100 text-rose-700",
+      };
+    case "EXIT":
+      return {
+        badgeClassName:
+          "border border-rose-300 bg-rose-200 text-rose-800",
+      };
+  }
+}
+
+function TimeframeSignalCard({ label, timeframe }: TimeframeEntry) {
+  const signalTheme = getTimeframeSignalTheme(timeframe.action.value);
+
+  return (
+    <DashboardPanel
+      tone="default"
+      className="overflow-hidden bg-white p-0"
+    >
+      <div className="grid min-h-[300px] grid-rows-[1fr_auto_1fr]">
+        <div className="flex flex-col justify-center gap-3 px-5 py-6 text-center sm:px-6">
+          <DashboardSectionLabel className="text-black/42">
+            ورود جدید
+          </DashboardSectionLabel>
+          <div className="text-xl font-medium tracking-[-0.04em] text-[#17181c]">
+            {timeframe.positionAdvice.forNewPosition.label}
+          </div>
+        </div>
+
+        <div className="border-y border-black/6 bg-[#f8f8f4] px-5 py-5 sm:px-6">
+          <div className="flex flex-col items-center gap-3 text-center">
+            <div className="text-xl font-medium tracking-[-0.04em] text-[#17181c]">
+              {label}
+            </div>
+            <div
+              className={cn(
+                "inline-flex min-w-[132px] items-center justify-center rounded-full px-4 py-2 text-sm font-semibold shadow-[0_14px_32px_-22px_rgba(23,24,28,0.55)]",
+                signalTheme.badgeClassName,
+              )}
+            >
+              {timeframe.action.label}
+            </div>
+            <div className="text-sm font-medium text-black/52">
+              {timeframe.quality.label}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col justify-center gap-3 px-5 py-6 text-center sm:px-6">
+          <DashboardSectionLabel className="text-black/42">
+            موقعیت موجود
+          </DashboardSectionLabel>
+          <div className="text-xl font-medium tracking-[-0.04em] text-[#17181c]">
+            {timeframe.positionAdvice.forExistingPosition.label}
+          </div>
+        </div>
+      </div>
+    </DashboardPanel>
+  );
 }
 
 export function AnalysisView({ analysis, symbol }: AnalysisViewProps) {
   const composite = analysis.signals.composite;
-  const timeframes = composite.timeframes;
-  const scoreValue = Math.min(100, Math.max(0, (composite.score + 100) / 2));
-  const timeframeRows: Array<
-    [string, (typeof timeframes)[keyof typeof timeframes]]
-  > = [
-    ["کوتاه‌مدت", timeframes.shortTerm],
-    ["میان‌مدت", timeframes.midTerm],
-    ["بلندمدت", timeframes.longTerm],
+  const scoreValue = getSignalProgress(composite.score);
+  const timeframeCards: TimeframeEntry[] = [
+    {
+      label: "کوتاه‌مدت",
+      timeframe: composite.timeframes.shortTerm,
+    },
+    {
+      label: "میان‌مدت",
+      timeframe: composite.timeframes.midTerm,
+    },
+    {
+      label: "بلندمدت",
+      timeframe: composite.timeframes.longTerm,
+    },
   ];
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-4 xl:grid-cols-[0.95fr_0.95fr_1.05fr]">
-        <DashboardPanel tone="muted" className="space-y-6">
-          <div className="flex items-start justify-between gap-3">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <DashboardIconFrame>
-                  <BrainCircuit className="h-5 w-5" />
-                </DashboardIconFrame>
-                <div className="text-2xl font-medium tracking-[-0.05em]">
-                  {symbol}
-                </div>
-              </div>
-              <DashboardSectionLabel>
-                نمای ترکیبی، سیگنال و ارزیابی بازه‌های زمانی
-              </DashboardSectionLabel>
-            </div>
-            <Badge variant="dashboard">{analysis.source}</Badge>
+      <section className="space-y-4">
+        <div className="flex items-center gap-3 px-1">
+          <DashboardIconFrame>
+            <BarChart3 className="h-5 w-5" />
+          </DashboardIconFrame>
+          <div>
+            <h2 className="text-2xl font-medium tracking-[-0.05em]">
+              جزئیات بازه‌های زمانی
+            </h2>
+            <DashboardSectionLabel>
+              سیگنال {symbol} برای هر بازه به‌صورت مستقل و قابل مقایسه
+            </DashboardSectionLabel>
           </div>
+        </div>
 
-          <div className="flex items-end gap-3">
-            <div className="text-6xl font-medium tracking-[-0.08em]">
-              {composite.score}
-            </div>
-            <Badge variant="dashboard-highlight" className="mb-2">
-              {composite.action.label}
-            </Badge>
-          </div>
+        <div className="grid gap-4 xl:grid-cols-3">
+          {timeframeCards.map((entry) => (
+            <TimeframeSignalCard key={entry.label} {...entry} />
+          ))}
+        </div>
+      </section>
 
-          <DashboardDotMeter
-            filled={Math.max(1, Math.min(7, Math.round(scoreValue / 15)))}
-          />
-        </DashboardPanel>
-
+      <div className="grid gap-4 xl:grid-cols-2">
         <DashboardPanel tone="accent" className="space-y-6">
           <div className="flex items-center gap-3">
             <DashboardIconFrame className="bg-[#fbfbf8]">
@@ -125,162 +200,7 @@ export function AnalysisView({ analysis, symbol }: AnalysisViewProps) {
             </div>
           </div>
         </DashboardPanel>
-
-        <DashboardPanel tone="dark" className="space-y-5">
-          <div className="text-3xl font-medium leading-[1.05] tracking-[-0.05em]">
-            جمع‌بندی
-            <br />
-            سریع
-            <br />
-            برای
-            <br />
-            تصمیم‌گیری
-          </div>
-
-          <div className="grid gap-3">
-            {[
-              { label: "تمایل", value: composite.bias.label, icon: BarChart3 },
-              { label: "ورود", value: composite.entryTiming.label, icon: BadgeCheck },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center justify-between rounded-[1.6rem] border border-white/10 bg-white/6 px-4 py-3"
-              >
-                <div>
-                  <div className="text-xs tracking-[0.04em] text-white/44">
-                    {item.label}
-                  </div>
-                  <div className="mt-1 text-sm font-medium text-white">
-                    {item.value}
-                  </div>
-                </div>
-                <item.icon className="h-4 w-4 text-white/72" />
-              </div>
-            ))}
-          </div>
-        </DashboardPanel>
       </div>
-
-      <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
-        <DashboardPanel tone="default" className="space-y-5">
-          <div className="flex items-center gap-3">
-            <DashboardIconFrame>
-              <BarChart3 className="h-5 w-5" />
-            </DashboardIconFrame>
-            <div>
-              <h2 className="text-2xl font-medium tracking-[-0.05em]">
-                جزئیات بازه‌های زمانی
-              </h2>
-              <DashboardSectionLabel>
-                خلاصه تصمیم برای بازه‌های کوتاه، میانی و بلند
-              </DashboardSectionLabel>
-            </div>
-          </div>
-
-          <div className="overflow-hidden rounded-[1.6rem] border border-black/6">
-            <Table>
-              <TableHeader className="bg-[#f1f1eb]">
-                <TableRow className="border-black/6 hover:bg-transparent">
-                  <TableHead className="px-5">بازه</TableHead>
-                  <TableHead>اقدام</TableHead>
-                  <TableHead>کیفیت</TableHead>
-                  <TableHead>ورود جدید</TableHead>
-                  <TableHead>موقعیت موجود</TableHead>
-                  <TableHead className="px-5 text-end">امتیاز</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {timeframeRows.map(([label, timeframe]) => (
-                  <TableRow
-                    key={label}
-                    className="border-black/6 hover:bg-[#f8f8f3]"
-                  >
-                    <TableCell className="px-5 font-medium">{label}</TableCell>
-                    <TableCell>{timeframe.action.label}</TableCell>
-                    <TableCell>{timeframe.quality.label}</TableCell>
-                    <TableCell>
-                      {timeframe.positionAdvice.forNewPosition.label}
-                    </TableCell>
-                    <TableCell>
-                      {timeframe.positionAdvice.forExistingPosition.label}
-                    </TableCell>
-                    <TableCell className="px-5 text-end">
-                      {formatPercent(timeframe.score)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </DashboardPanel>
-
-        <DashboardPanel tone="muted" className="space-y-4">
-          <div className="flex items-center gap-3">
-            <DashboardIconFrame>
-              <BadgeCheck className="h-5 w-5" />
-            </DashboardIconFrame>
-            <div>
-              <h2 className="text-2xl font-medium tracking-[-0.05em]">
-                شاخص‌ها
-              </h2>
-              <DashboardSectionLabel>
-                مهم‌ترین خروجی‌های محاسباتی
-              </DashboardSectionLabel>
-            </div>
-          </div>
-
-          <div className="grid gap-3">
-            {[
-              ["آخرین قیمت", analysis.metrics.latestClosePrice],
-              ["تغییر", analysis.metrics.latestClosePriceChangePercent],
-              ["شیب هفتگی", analysis.metrics.weeklySlope],
-              ["شیب ماهانه", analysis.metrics.monthlySlope],
-              ["شیب فصلی", analysis.metrics.quarterlySlope],
-              [
-                "گسترش نقدشوندگی",
-                analysis.metrics.liquidityExpansion ? "بله" : "خیر",
-              ],
-            ].map(([label, value]) => (
-              <div
-                key={label as string}
-                className="dashboard-surface flex items-center justify-between px-4 py-3"
-              >
-                <span className="text-sm text-black/56">{label}</span>
-                <span className="text-sm font-medium">
-                  {typeof value === "number" ? value.toFixed(2) : String(value)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </DashboardPanel>
-      </div>
-
-      <DashboardPanel tone="default" className="space-y-4">
-        <div className="flex items-center gap-3">
-          <DashboardIconFrame>
-            <RefreshCcw className="h-5 w-5" />
-          </DashboardIconFrame>
-          <div>
-            <h2 className="text-2xl font-medium tracking-[-0.05em]">
-              یادداشت‌ها
-            </h2>
-            <DashboardSectionLabel>
-              اطلاعات کمکی و اجرایی
-            </DashboardSectionLabel>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          <Badge variant="dashboard">{analysis.windows.weekly}W</Badge>
-          <Badge variant="dashboard">{analysis.windows.monthly}M</Badge>
-          <Badge variant="dashboard">{analysis.windows.quarterly}Q</Badge>
-        </div>
-
-        <p className="text-sm leading-7 text-black/62">{analysis.disclaimer}</p>
-        <div className="rounded-[1.6rem] border border-black/6 bg-[#f1f1eb] px-4 py-3 text-sm text-black/58">
-          این تحلیل از API عمومی بارگذاری شده و با کش سرور نگه‌داری می‌شود.
-        </div>
-      </DashboardPanel>
     </div>
   );
 }

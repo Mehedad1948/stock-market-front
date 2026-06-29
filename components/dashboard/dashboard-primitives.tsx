@@ -7,7 +7,7 @@ export function DashboardPanel({
   tone = "default",
   ...props
 }: HTMLAttributes<HTMLDivElement> & {
-  tone?: "default" | "muted" | "accent" | "dark";
+  tone?: "default" | "muted" | "accent" | "amber" | "dark";
 }) {
   return (
     <div
@@ -19,6 +19,8 @@ export function DashboardPanel({
           "border-[#e5eadf] bg-[#eef2ea] text-[#17181c]",
         tone === "accent" &&
           "border-[#dbe96d] bg-[#efff78] text-[#17181c]",
+        tone === "amber" &&
+          "border-[#efd3a2] bg-[#f7e6c5] text-[#17181c]",
         tone === "dark" &&
           "border-black/10 bg-[#1a1b20] text-white",
         className,

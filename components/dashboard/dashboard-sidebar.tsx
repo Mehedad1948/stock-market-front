@@ -34,7 +34,6 @@ const navItems = [
 
 export function DashboardSidebar({
   activePath,
-  symbol,
 }: DashboardSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
 

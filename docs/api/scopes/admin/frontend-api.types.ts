@@ -2,6 +2,14 @@
    This file is intentionally standalone so you can copy it into another project.
    Dates are ISO strings in the frontend contract, even when the backend uses Date objects internally. */
 
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: JsonValue }
+  | JsonValue[];
+
 export type ErrorResponse = {
   status: 'ERROR';
   message: string;
@@ -12,6 +20,8 @@ export type ErrorResponse = {
   accessLevel?: string;
   [key: string]: unknown;
 };
+
+export type DiscountCodeStatus = 'ACTIVE' | 'DISABLED' | 'DRAFT';
 
 export type DiscountValueType = 'PERCENTAGE' | 'FIXED_AMOUNT';
 
