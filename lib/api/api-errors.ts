@@ -56,8 +56,6 @@ export function isBackendApiErrorEnvelope(value: unknown): value is BackendApiEr
 export function isBackendApiSuccessEnvelope<TData>(
   value: unknown
 ): value is BackendApiSuccessEnvelope<TData> {
-  console.log('👋👋 payload value');
-  
   return Boolean(
     value &&
       typeof value === "object" &&

@@ -22,11 +22,10 @@ export const authService = {
   },
 
   requestEmailOtp(body: EmailOtpRequest) {
-    console.log('🚀🚀🚀 body', body);
-    
     return authWebService.post<EmailOtpRequestResponse>("/email/request-otp", {
       body,
       rawResponse: true,
+      timeoutMs: 30_000,
       withAuth: false,
     });
   },

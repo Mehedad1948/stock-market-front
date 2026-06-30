@@ -436,6 +436,20 @@ export function LoginPanel({
                     />
                   </div>
 
+                  {emailOtpMeta.otpCode ? (
+                    <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                      <div className="text-xs font-medium text-emerald-700">
+                        OTP debug code
+                      </div>
+                      <div
+                        className="mt-1 font-mono text-lg tracking-[0.3em]"
+                        dir="ltr"
+                      >
+                        {emailOtpMeta.otpCode}
+                      </div>
+                    </div>
+                  ) : null}
+
                   {emailVerifyError ? (
                     <div className="flex items-start gap-2 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                       <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" />

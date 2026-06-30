@@ -25,8 +25,6 @@ async function persistAuthResponse(auth: FederatedAuthResponse) {
 export async function requestEmailOtpAction(
   input: EmailOtpRequest,
 ): Promise<ApiActionResult<EmailOtpRequestResponse>> {
-  console.log('✅✅ requestEmailOtpAction', input);
-  
   return runTrustedAction(() => authService.requestEmailOtp(input));
 }
 

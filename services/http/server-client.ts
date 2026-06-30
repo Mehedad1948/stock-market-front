@@ -97,9 +97,29 @@ export async function serverRequest<TData>(
     requestOptions.body = JSON.stringify(body);
   }
 
-  const response = await fetch(joinBackendUrl(path), requestOptions);
+  let response: Response;
+
+  try {
+    response = await fetch(joinBackendUrl(path), requestOptions);
+  } catch (error) {
+    if (error instanceof Error && error.name === "TimeoutError") {
+      throw createApiError({
+        code: "BACKEND_REQUEST_TIMEOUT",
+        message: "The backend took too long to respond. Please try again.",
+        requestId,
+        status: 504,
+      });
+    }
+
+    throw createApiError({
+      code: "BACKEND_UNAVAILABLE",
+      message: "The backend could not be reached. Please try again.",
+      requestId,
+      status: 502,
+    });
+  }
+
   const payload = await readJson(response);
-console.log('🐞🐞 response', response);
 
   if (!response.ok) {
     if (isBackendApiErrorEnvelope(payload)) {
